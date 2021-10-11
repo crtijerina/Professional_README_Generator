@@ -1,24 +1,10 @@
 // TODO: Include packages needed for this application
-const generateMarkdown = require('./utils/generateMarkdown');
+const generateMarkdown = require("./utils/generateMarkdown");
 const inquirer = require("inquirer");
 const fs = require("fs");
-const fileName = "ThisGeneratesREADME.md"
+const fileName = "ThisGeneratesREADME.md";
 
-let licenseBadge = (answers) => {
-  if (answers.license === "Apache 2.0 License") {
-    return "[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)";
-  } else if (answers.license === "Eclipse Public License 1.0") {
-    return "[![License](https://img.shields.io/badge/License-EPL%201.0-red.svg)](https://opensource.org/licenses/EPL-1.0)";
-  } else if (answers.license === "GNU GPL v3") {
-    return "[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)";
-  } else if (answers.license === "The MIT License") {
-    return "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)";
-  } else if (
-    answers.license === "The Do What the Fuck You Want to Public License"
-  ) {
-    return "[![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](http://www.wtfpl.net/about/)";
-  }
-};
+
 // TODO: Create an array of questions for user input
 const questions = [
   {
@@ -87,27 +73,19 @@ const questions = [
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, answers) {
-
-    fs.writeFile(
-        fileName,
-    generateMarkdown(answers),
-    licenseBadge,
-    (err) => {
-      if (err) throw err;
-      console.log("You know have the best read me ever!");
-    }
-  );
+function writeToFile(fileName, data) {
+    const answers = data
+  fs.writeFile(fileName, generateMarkdown(answers), (err) => {
+    if (err) throw err;
+    console.log("You know have the best read me ever!");
+  });
 }
 
 // TODO: Create a function to initialize app
 function init() {
-  inquirer.prompt(questions)
-  .then(answers => {
-      writeToFile(answers);
-      
-});
-
+  inquirer.prompt(questions).then((answers) => {
+    writeToFile("ThisGeneratesREADME.md", answers);
+  });
 }
 
 // Function call to initialize app
